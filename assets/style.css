@@ -1,0 +1,27 @@
+.available-letter {
+    width: 30px;
+    height: 30px;
+    border-style: solid;
+    padding: 2px;
+    float: left;
+    margin: 2px;
+}
+.available-letter-button-color {
+    color: grey;
+}
+.jumbotron {
+	padding-top: 1%;
+	padding-bottom: 2%;
+}
+.lives-pill {
+	margin: auto;
+}
+.guesses-pill{
+	margin: auto;
+}
+#available-letters-display {
+	margin-left: 2rem;
+}
+#wrong-geusses-display {
+	margin-right: 2rem;
+}
