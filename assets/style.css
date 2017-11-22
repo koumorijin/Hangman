@@ -9,6 +9,17 @@
 .available-letter-button-color {
     color: grey;
 }
+.correct-letter {
+	width: 30px;
+    height: 30px;
+    border-style: solid;
+    padding: 2px;
+    float: left;
+    margin: 2px;
+}
+.wrong-letter {
+
+}
 .jumbotron {
 	padding-top: 1%;
 	padding-bottom: 2%;
@@ -25,10 +36,10 @@
 #wrong-geusses-display {
 	margin-right: 2rem;
 }
-#answer-display {
+/*#answer-display {
 	margin-right: 1rem;
 	margin-left: 1rem;
-}
+}*/
 .btn-disable {
 	background-color: grey !important;
 }

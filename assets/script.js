@@ -70,7 +70,7 @@ $(document).ready(function() {
 
 		//CREATE THE LETTER BUTTON DISPLAYS
 		for(index = 0; index < letters.length; index++){
-				var letterBtn = $("<p>");
+				var letterBtn = $("<button>");
 				letterBtn.addClass("available-letter-button available-letter available-letter-button-color letter");
 				letterBtn.attr("data-letter", letters[index]);
 				letterBtn.html(letters[index]);
@@ -117,25 +117,14 @@ $(document).ready(function() {
 
 	//CREATE THE EVENT HANDLER FOR THE LETTERS CLASS
 		$(".available-letter-button").click(function(){
-			var guessedLetter = $("<p>");
-			// console.log($(".available-letter-button").attr("data-letter"));
-			//selections(guessedLetter);
-			guessedLetter.addClass("letter available-letter");
+			var guessedLetter = $("<div>");
+			console.log($(".available-letter-button").attr("data-letter"));
+			guessedLetter.addClass("letter correct-letter");
 			guessedLetter.text($(this).attr("data-letter"));
-			console.log(guessedLetter.text($(this).attr("data-letter")));
+			//console.log(guessedLetter);
 			$(".correct-letters").append(guessedLetter);
 			// $(this).prop("disabled", true);
-			// $(this).addClass("btn-disabled");
-			//guessedLetter = $(".correct-letters");
-
-		// $(".letter-button").click(function() {
-  //       var fridgeMagnet = $("<div>");
-  //       fridgeMagnet.addClass('letter fridge-color');
-  //       fridgeMagnet.text($(this).attr("data-letter"));
-  //       $("#display").append(fridgeMagnet);
-  //     });
-
-
+			$(this).addClass("btn-disabled");
 		});
 
 	// function selections(letter){
@@ -156,8 +145,6 @@ $(document).ready(function() {
 	// 	if (currentWord[index] === ) {
 
 	// 	}	
-	
-	//CREATE THE LOGIC TO ADD THE CHOSEN LETTERS TO THE CORRECT OR THE INCCORECT LETTERS DISPLAY
 
 	//CREATE THE LOGIC TO DISPLAY THE CORRECT LETTERS IN THE CORRECT ORDER OF THE ARRAY OF THE RANDOMLY CHOSON WORD
 
