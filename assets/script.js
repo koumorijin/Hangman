@@ -25,6 +25,7 @@ $(document).ready(function() {
 					 "money", "bitcoin", "invest", "book", "shelf", "power", "candy", "smile", "hair", "tooth", "knife", "fork", "spoon", "left", "right", "government", "anarchy",
 					 "medicine", "forget", "building", "tower", "house", "apartment", "tissue", "frog", "mouth", "tongue", "tooth", "bean", "fridge", "water", "food", "safe",
 					 "bike", "toy", "pencil", "bark", "meow"];
+	
 	var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 	var lives;
 	var guesses;
@@ -32,6 +33,13 @@ $(document).ready(function() {
 	var difficultyChosen;
 	var hasWon;
 	var hasLost;
+	var numberOfWins;
+	var numberOfLosses;
+	var answer;
+	var answerDisplay;
+	var randomWord;
+	var currentWord;
+	var remainingLetters;
 
 	//INITIALIZE THE APP 
 	function initializeApp() {
@@ -42,9 +50,16 @@ $(document).ready(function() {
     difficultyChosen = false;
     hasWon = false;
     hasLost = false;
+    answer = [];
+    randomWord = "";
+    currentWord = [];
+    answerDisplay = [];
+    remainingLetters = "";
 
-    $("#letter-buttons").empty();
+    $(".letter-buttons").empty();
 	}
+
+	initializeApp();
 
 	//CREATE AN EVENT LISTENER FOR THE DIFFICULTY BUTTONS
 	$(".difficulty-button").click(function() {
@@ -56,33 +71,63 @@ $(document).ready(function() {
 		//CREATE THE LETTER BUTTON DISPLAYS
 		for(index = 0; index < letters.length; index++){
 				var letterBtn = $("<p>");
-				letterBtn.addClass('available-letter-button available-letter available-letter-button-color');
-				letterBtn.attr('data-letter', letters[index]);
+				letterBtn.addClass("available-letter-button available-letter available-letter-button-color");
+				letterBtn.attr("data-letter", letters[index]);
 				letterBtn.html(letters[index]);
 				$(".letter-buttons").append(letterBtn);
-			}
+		}
 
 		if(difficulty === "easy"){
 			lives = 10;
 			guesses = 10;
+			randomWord = easyWords[Math.floor(Math.random() * easyWords.length)];
+			startGame(randomWord);
+			console.log(randomWord);
 		}else if(difficulty === "medium"){
 			lives = 5;
 			guesses = 10;
+			randomWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
+			startGame(randomWord);
+			console.log(randomWord);
 		}else if(difficulty === "hard"){
 			lives = 5;
 			guesses = 15;
+			randomWord = hardWords[Math.floor(Math.random() * hardWords.length)];
+			startGame(randomWord);
+			console.log(randomWord);
 		}
 	//SET DIFFICULTY CHOSEN TO TRUE
 	difficultyChosen = true;
 	//console.log(difficultyChosen);
 	//SET THE LOGIC TO DISPLAY THE OTHER APP INFORMATION
-	var 	
+		
 	});
 
-	//CREATE THE KEY DOWN EVENT HANDLER FOR THE LETTERS CLASS
-		$(".letter-button").click(function(){
-			var guessedLetters
+		function startGame(randomWord){
+		randomWord = randomWord.toLowerCase();
+		currentWord = randomWord.split("");
+			for(var index = 0; index < currentWord.length; index++){
+				answerDisplay[index] = " __ ";
+			}
+		remainingLetters = currentWord.length;
+		var blankSpaces = answerDisplay.join("");
+		$("#answerDisplay").html(blankSpaces);
+		}	
+
+	//CREATE THE EVENT HANDLER FOR THE LETTERS CLASS
+		$(".available-letter-button").click(function(){
+			var guessedLetter = $(this).attr("data-letter");
+			console.log($(this).attr("data-letter"));
+			$(this).prop("disabled", true);
+			$(this).addClass("btn-disabled");
+			//guessedLetter = $(".correct-letters");
+
 		});
+	// for(var index = 0; index < remainingLetters; index++){
+	// 	if (currentWord[index] === ) {
+
+	// 	}	
+	
 	//CREATE THE LOGIC TO ADD THE CHOSEN LETTERS TO THE CORRECT OR THE INCCORECT LETTERS DISPLAY
 
 	//CREATE THE LOGIC TO DISPLAY THE CORRECT LETTERS IN THE CORRECT ORDER OF THE ARRAY OF THE RANDOMLY CHOSON WORD
