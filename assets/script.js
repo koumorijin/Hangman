@@ -71,7 +71,7 @@ $(document).ready(function() {
 		//CREATE THE LETTER BUTTON DISPLAYS
 		for(index = 0; index < letters.length; index++){
 				var letterBtn = $("<p>");
-				letterBtn.addClass("available-letter-button available-letter available-letter-button-color");
+				letterBtn.addClass("available-letter-button available-letter available-letter-button-color letter");
 				letterBtn.attr("data-letter", letters[index]);
 				letterBtn.html(letters[index]);
 				$(".letter-buttons").append(letterBtn);
@@ -82,19 +82,19 @@ $(document).ready(function() {
 			guesses = 10;
 			randomWord = easyWords[Math.floor(Math.random() * easyWords.length)];
 			startGame(randomWord);
-			console.log(randomWord);
+			//console.log(randomWord);
 		}else if(difficulty === "medium"){
 			lives = 5;
 			guesses = 10;
 			randomWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
 			startGame(randomWord);
-			console.log(randomWord);
+			//console.log(randomWord);
 		}else if(difficulty === "hard"){
 			lives = 5;
 			guesses = 15;
 			randomWord = hardWords[Math.floor(Math.random() * hardWords.length)];
 			startGame(randomWord);
-			console.log(randomWord);
+			//console.log(randomWord);
 		}
 	//SET DIFFICULTY CHOSEN TO TRUE
 	difficultyChosen = true;
@@ -105,6 +105,7 @@ $(document).ready(function() {
 
 		function startGame(randomWord){
 		randomWord = randomWord.toLowerCase();
+		console.log(randomWord);
 		currentWord = randomWord.split("");
 			for(var index = 0; index < currentWord.length; index++){
 				answerDisplay[index] = " __ ";
@@ -116,13 +117,41 @@ $(document).ready(function() {
 
 	//CREATE THE EVENT HANDLER FOR THE LETTERS CLASS
 		$(".available-letter-button").click(function(){
-			var guessedLetter = $(this).attr("data-letter");
-			console.log($(this).attr("data-letter"));
-			$(this).prop("disabled", true);
-			$(this).addClass("btn-disabled");
+			var guessedLetter = $("<p>");
+			// console.log($(".available-letter-button").attr("data-letter"));
+			//selections(guessedLetter);
+			guessedLetter.addClass("letter available-letter");
+			guessedLetter.text($(this).attr("data-letter"));
+			console.log(guessedLetter.text($(this).attr("data-letter")));
+			$(".correct-letters").append(guessedLetter);
+			// $(this).prop("disabled", true);
+			// $(this).addClass("btn-disabled");
 			//guessedLetter = $(".correct-letters");
 
+		// $(".letter-button").click(function() {
+  //       var fridgeMagnet = $("<div>");
+  //       fridgeMagnet.addClass('letter fridge-color');
+  //       fridgeMagnet.text($(this).attr("data-letter"));
+  //       $("#display").append(fridgeMagnet);
+  //     });
+
+
 		});
+
+	// function selections(letter){
+	// 	var letterGuessed = letter.toLowerCase();
+	// 	var letterInWord = false;
+	// 	var letterAlreadyGuessed = false;
+	// 	for(var j = 0; j < currentWord.length; j++){
+	// 		if(currentWord[j] === letterGuessed){
+	// 			remainingLetters--;
+	// 			answer[j] = letterGuessed;
+	// 			answerDisplay[j] = " "+letterGuessed+" ";
+	// 			$("#answerDisplay").html(answerDisplay);
+	// 			letterInWord = true;
+	// 		}
+	// 	}
+	// }
 	// for(var index = 0; index < remainingLetters; index++){
 	// 	if (currentWord[index] === ) {
 
