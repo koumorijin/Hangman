@@ -71,7 +71,7 @@ $(document).ready(function() {
 		//CREATE THE LETTER BUTTON DISPLAYS
 		for(index = 0; index < letters.length; index++){
 				var letterBtn = $("<button>");
-				letterBtn.addClass("available-letter-button available-letter available-letter-button-color letter");
+				letterBtn.addClass("available-letter-button available-letter available-letter-button-color");
 				letterBtn.attr("data-letter", letters[index]);
 				letterBtn.html(letters[index]);
 				$(".letter-buttons").append(letterBtn);
@@ -117,13 +117,15 @@ $(document).ready(function() {
 
 	//CREATE THE EVENT HANDLER FOR THE LETTERS CLASS
 		$(".available-letter-button").click(function(){
+			console.log($(this));
 			var guessedLetter = $("<div>");
 			console.log($(".available-letter-button").attr("data-letter"));
+
 			guessedLetter.addClass("letter correct-letter");
 			guessedLetter.text($(this).attr("data-letter"));
 			//console.log(guessedLetter);
 			$(".correct-letters").append(guessedLetter);
-			// $(this).prop("disabled", true);
+			$(this).prop("disabled", true);
 			$(this).addClass("btn-disabled");
 		});
 
