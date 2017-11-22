@@ -7,12 +7,13 @@
     margin: 2px;
 }
 .available-letter-button-color {
-    color: grey;
+    color: blue;
+    background-color: grey;
 }
 .correct-letter {
 	width: 30px;
     height: 30px;
-    border-style: solid;
+    border-style: none;
     padding: 2px;
     float: left;
     margin: 2px;
@@ -40,6 +41,8 @@
 	margin-right: 1rem;
 	margin-left: 1rem;
 }*/
-.btn-disable {
-	background-color: grey !important;
+.btn-disabled {
+	background-color: white !important;
+	color: white !important;
+	border-style: none;
 }

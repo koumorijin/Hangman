@@ -76,7 +76,6 @@ $(document).ready(function() {
 				letterBtn.html(letters[index]);
 				$(".letter-buttons").append(letterBtn);
 		}
-
 		if(difficulty === "easy"){
 			lives = 10;
 			guesses = 10;
@@ -96,38 +95,50 @@ $(document).ready(function() {
 			startGame(randomWord);
 			//console.log(randomWord);
 		}
-	//SET DIFFICULTY CHOSEN TO TRUE
-	difficultyChosen = true;
-	//console.log(difficultyChosen);
+		//SET DIFFICULTY CHOSEN TO TRUE
+		difficultyChosen = true;
+		//console.log(difficultyChosen);
+		//PRIMARY GAME LOGIC
+		function startGame(randomWord){
+			randomWord = randomWord.toLowerCase();
+			console.log(randomWord);
+			currentWord = randomWord.split("");
+				for(var index = 0; index < currentWord.length; index++){
+					answerDisplay[index] = " __ ";
+				}
+			remainingLetters = currentWord.length;
+			//console.log(remainingLetters);
+			var blankSpaces = answerDisplay.join("");
+			$("#answerDisplay").html(blankSpaces);
+			//CREATE THE EVENT HANDLER FOR THE LETTERS CLASS
+			$(".available-letter-button").click(function(){
+				//console.log($(this).html());
+				var guessedLetter = $("<div>");
+				//console.log($(".available-letter-button").attr("data-letter"));
+				guessedLetter.addClass("letter correct-letter");
+				guessedLetter.text($(this).attr("data-letter"));
+				//console.log(guessedLetter);
+				for(var index2 = 0; randomWord.length < index2; index2++){
+					console.log(index2);	
+				}
+				$(".correct-letters").append(guessedLetter);
+				$(this).prop("disabled", true);
+				$(this).addClass("btn-disabled");
+			});
+		}
+		//DETERMINE IF THE LETTER GUESSED BELONGS IN THE ANSWER OR WRONG DISPLAYS
+		// for(var letterGuessed = 0; currentWord.length < letterGuessed; letterGuessed++){
+		// 	console.log(guessedLetter);
+		// 	if(currentWord[letterGuessed] === guessedLetter){
+		// 		$("#answerDisplay").append(letterGuessed);
+		// 		remainingLetters--; 
+		// 	}
+		// 	$("wrong-geusses-display").append(letterGuessed);
+		// }
 	//SET THE LOGIC TO DISPLAY THE OTHER APP INFORMATION
-		
 	});
 
-		function startGame(randomWord){
-		randomWord = randomWord.toLowerCase();
-		console.log(randomWord);
-		currentWord = randomWord.split("");
-			for(var index = 0; index < currentWord.length; index++){
-				answerDisplay[index] = " __ ";
-			}
-		remainingLetters = currentWord.length;
-		var blankSpaces = answerDisplay.join("");
-		$("#answerDisplay").html(blankSpaces);
-		}	
-
-	//CREATE THE EVENT HANDLER FOR THE LETTERS CLASS
-		$(".available-letter-button").click(function(){
-			console.log($(this));
-			var guessedLetter = $("<div>");
-			console.log($(".available-letter-button").attr("data-letter"));
-
-			guessedLetter.addClass("letter correct-letter");
-			guessedLetter.text($(this).attr("data-letter"));
-			//console.log(guessedLetter);
-			$(".correct-letters").append(guessedLetter);
-			$(this).prop("disabled", true);
-			$(this).addClass("btn-disabled");
-		});
+		
 
 	// function selections(letter){
 	// 	var letterGuessed = letter.toLowerCase();
