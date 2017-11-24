@@ -19,7 +19,12 @@
     margin: 2px;
 }
 .wrong-letter {
-
+	width: 30px;
+    height: 30px;
+    border-style: none;
+    padding: 2px;
+    float: left;
+    margin: 2px;
 }
 .jumbotron {
 	padding-top: 1%;

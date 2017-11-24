@@ -40,6 +40,7 @@ $(document).ready(function() {
 	var randomWord;
 	var currentWord;
 	var remainingLetters;
+	var matchingLetter;
 
 	//INITIALIZE THE APP 
 	function initializeApp() {
@@ -55,6 +56,7 @@ $(document).ready(function() {
     currentWord = [];
     answerDisplay = [];
     remainingLetters = "";
+    matchingLetter = "";
 
     $(".letter-buttons").empty();
 	}
@@ -111,21 +113,49 @@ $(document).ready(function() {
 			var blankSpaces = answerDisplay.join("");
 			$("#answerDisplay").html(blankSpaces);
 			//CREATE THE EVENT HANDLER FOR THE LETTERS CLASS
-			$(".available-letter-button").click(function(){
-				//console.log($(this).html());
-				var guessedLetter = $("<div>");
-				//console.log($(".available-letter-button").attr("data-letter"));
-				guessedLetter.addClass("letter correct-letter");
-				guessedLetter.text($(this).attr("data-letter"));
-				//console.log(guessedLetter);
-				for(var index2 = 0; randomWord.length < index2; index2++){
-					console.log(index2);	
-				}
+		}
+		$(".available-letter-button").click(function(){
+			//console.log($(this).html());
+			guessedLetter = $("<div>");
+			guessedLetter.text($(this).attr("data-letter"));
+		
+
+		for(var j = 0; j < currentWord.length; j++){
+		 	//console.log("This is my position in the array " + j);
+		 	//console.log("This should be my guessed letter " + guessedLetter.text());
+		 	matchingLetter = guessedLetter.text().toLowerCase();
+			if(currentWord[j] === matchingLetter){
+				//console.log("This is my CORRECT matching letter: " + matchingLetter);
+				//console.log("This is my currentWord[j] index value " + currentWord[j]);
+				//console.log("This is my currentWord.text() value "+ guessedLetter.text());
+				
+				answer[j] = matchingLetter;
+				answerDisplay[j] = " " + matchingLetter + " ";
+				remainingLetters--;
+				$("#answerDisplay").html(answerDisplay);
 				$(".correct-letters").append(guessedLetter);
 				$(this).prop("disabled", true);
 				$(this).addClass("btn-disabled");
-			});
+				guessedLetter.addClass("letter correct-letter");
+				var letterInWord = true;
+			}
 		}
+			if(!letterInWord){
+				console.log("INCORRECT " + matchingLetter);
+				//console.log("This is my matching letter: " + matchingLetter);
+				$(".wrong-letters").append(guessedLetter);
+				//console.log("This is my INCORRECT currentWord[j] index value " + currentWord[j]);
+				//console.log("This is my INCORRECT currentWord.text() value "+ guessedLetter.text().toLowerCase());
+				$(this).prop("disabled", true);
+				$(this).addClass("btn-disabled");
+				guessedLetter.addClass("letter wrong-letter");
+			}
+		});
+			//console.log($(".available-letter-button").attr("data-letter"));
+			
+			
+			//console.log(randomWord.length);
+	
 		//DETERMINE IF THE LETTER GUESSED BELONGS IN THE ANSWER OR WRONG DISPLAYS
 		// for(var letterGuessed = 0; currentWord.length < letterGuessed; letterGuessed++){
 		// 	console.log(guessedLetter);
