@@ -16,10 +16,10 @@
 				<h1 class="text-center">Hangman</h1>
 				<p class="text-center">Try not to kill Nicholas Cage!</p>
 			<div class="text-center">
-				<img src="./images/nicCage_dementedLookUp.png" class="image-responsive">
+				<img id="nicCage" src="./images/nicCage_dementedLookUp.png" class="image-responsive">
 			</div>
 			<div>
-				<h4 class="centerMe text-center">To Begin Choose a Difficulty</h4>
+				<h4 id="gameInstructions" class="centerMe text-center">To Begin Choose a Difficulty</h4>
 			</div>
 			<div class="button-group mr-2 text-center">
 				<button class="btn btn-success easy-button difficulty-button" value="easy">Easy</button>
@@ -27,8 +27,9 @@
 				<button class="btn btn-danger hard-button difficulty-button" value="hard">Hard</button>
 			</div>
 			<div id="variables-display">
-				<span class="badge badge-pill badge-dark guesses-pill float-right">guesses VAR</span>
-				<span class="badge badge-pill badge-info lives-pill float-right">lives VAR</span>
+				<span class="badge badge-pill badge-success wins-pill float-left">Wins   <span id="winCounter" class="badge badge-light">0</span></span>
+				<span class="badge badge-pill badge-danger losses-pill float-left">Losses   <span id="lossCounter" class="badge badge-light">0</span></span>
+				<span class="badge badge-pill badge-dark guesses-pill float-left">Guesses   <span id="guessCounter" class="badge badge-light">0</span></span>
 			</div>
 		</div>
 	</div>
@@ -48,18 +49,18 @@
 		<div class="card text-center" id="available-letters-display">
 			<div class="card-block">
 				<h4 class="card-title">Available Letters</h4>
-				<p id="buttons" class="card-text letter-buttons"></p>
+				<p id="buttons" class="card-text letter-buttons text-center"></p>
 			</div>
 		</div>
-		<div class="card text-center" id="correct-guesses-display">
+		<!--<div class="card text-center" id="correct-guesses-display">
 			<div class="card-block">
 				<h4 class="card-title">Correct Letters</h4>
 				<div class="card-text correct-letters"></div>
 			</div>
-		</div>
+		</div> -->
 		<div class="card text-center" id="wrong-geusses-display">
 			<div class="card-block">
-				<h4 class="card-title">Wrong Letters</h4>
+				<h4 class="card-title">Incorrect Guesses</h4>
 				<p class="card-text wrong-letters"></p>		
 			</div>
 		</div>
@@ -67,3 +68,4 @@
 
 </body>
 </html>
+

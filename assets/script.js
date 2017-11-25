@@ -27,12 +27,9 @@ $(document).ready(function() {
 					 "bike", "toy", "pencil", "bark", "meow"];
 	
 	var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-	var lives;
 	var guesses;
 	var difficulty;
 	var difficultyChosen;
-	var hasWon;
-	var hasLost;
 	var numberOfWins;
 	var numberOfLosses;
 	var answer;
@@ -44,31 +41,46 @@ $(document).ready(function() {
 
 	//INITIALIZE THE APP 
 	function initializeApp() {
-    lives = "";
-    guess = "";
+    guesses = "";
     difficulty = "";
     result = "";
     difficultyChosen = false;
-    hasWon = false;
-    hasLost = false;
     answer = [];
     randomWord = "";
     currentWord = [];
     answerDisplay = [];
     remainingLetters = "";
     matchingLetter = "";
+    numberOfWins = 0;
+    numberOfLosses = 0;
 
     $(".letter-buttons").empty();
 	}
 
 	initializeApp();
 
+	function resetApp(wins, losses){
+	guesses = "";
+    difficulty = "";
+    result = "";
+    difficultyChosen = false;
+    answer = [];
+    randomWord = "";
+    currentWord = [];
+    answerDisplay = [];
+    remainingLetters = "";
+    matchingLetter = "";
+    numberOfLosses = losses;
+    numberOfWins = wins;    
+	}
+
 	//CREATE AN EVENT LISTENER FOR THE DIFFICULTY BUTTONS
 	$(".difficulty-button").click(function() {
 		if(difficultyChosen === true) return;
 		difficulty = $(this).val();
-		//console.log($(this).val());
-		//console.log(difficulty);
+		$("#nicCage").attr("src", "./images/nicCage_dementedLookUp.png");
+		$(".letter-buttons").empty();
+		$(".wrong-letters").empty();
 
 		//CREATE THE LETTER BUTTON DISPLAYS
 		for(index = 0; index < letters.length; index++){
@@ -79,29 +91,23 @@ $(document).ready(function() {
 				$(".letter-buttons").append(letterBtn);
 		}
 		if(difficulty === "easy"){
-			lives = 10;
-			guesses = 10;
+			guesses = 5;
 			randomWord = easyWords[Math.floor(Math.random() * easyWords.length)];
-			startGame(randomWord);
-			//console.log(randomWord);
+			startGame(randomWord, guesses);
 		}else if(difficulty === "medium"){
-			lives = 5;
 			guesses = 10;
 			randomWord = mediumWords[Math.floor(Math.random() * mediumWords.length)];
-			startGame(randomWord);
-			//console.log(randomWord);
+			startGame(randomWord, guesses);
 		}else if(difficulty === "hard"){
-			lives = 5;
-			guesses = 15;
+			guesses = 10;
 			randomWord = hardWords[Math.floor(Math.random() * hardWords.length)];
-			startGame(randomWord);
-			//console.log(randomWord);
+			startGame(randomWord, guesses);
 		}
 		//SET DIFFICULTY CHOSEN TO TRUE
 		difficultyChosen = true;
-		//console.log(difficultyChosen);
+
 		//PRIMARY GAME LOGIC
-		function startGame(randomWord){
+		function startGame(randomWord, guesses){
 			randomWord = randomWord.toLowerCase();
 			console.log(randomWord);
 			currentWord = randomWord.split("");
@@ -109,26 +115,16 @@ $(document).ready(function() {
 					answerDisplay[index] = " __ ";
 				}
 			remainingLetters = currentWord.length;
-			//console.log(remainingLetters);
 			var blankSpaces = answerDisplay.join("");
 			$("#answerDisplay").html(blankSpaces);
-			//CREATE THE EVENT HANDLER FOR THE LETTERS CLASS
+			$("#guessCounter").html(guesses);
 		}
 		$(".available-letter-button").click(function(){
-			//console.log($(this).html());
 			guessedLetter = $("<div>");
 			guessedLetter.text($(this).attr("data-letter"));
-		
-
 		for(var j = 0; j < currentWord.length; j++){
-		 	//console.log("This is my position in the array " + j);
-		 	//console.log("This should be my guessed letter " + guessedLetter.text());
 		 	matchingLetter = guessedLetter.text().toLowerCase();
 			if(currentWord[j] === matchingLetter){
-				//console.log("This is my CORRECT matching letter: " + matchingLetter);
-				//console.log("This is my currentWord[j] index value " + currentWord[j]);
-				//console.log("This is my currentWord.text() value "+ guessedLetter.text());
-				
 				answer[j] = matchingLetter;
 				answerDisplay[j] = " " + matchingLetter + " ";
 				remainingLetters--;
@@ -142,58 +138,42 @@ $(document).ready(function() {
 		}
 			if(!letterInWord){
 				console.log("INCORRECT " + matchingLetter);
-				//console.log("This is my matching letter: " + matchingLetter);
 				$(".wrong-letters").append(guessedLetter);
-				//console.log("This is my INCORRECT currentWord[j] index value " + currentWord[j]);
-				//console.log("This is my INCORRECT currentWord.text() value "+ guessedLetter.text().toLowerCase());
 				$(this).prop("disabled", true);
 				$(this).addClass("btn-disabled");
 				guessedLetter.addClass("letter wrong-letter");
+				guesses--;
+				$("#guessCounter").html(guesses);
 			}
+			endGame();
+			//console.log("This is my current word " + currentWord);
 		});
-			//console.log($(".available-letter-button").attr("data-letter"));
 			
-			
-			//console.log(randomWord.length);
-	
-		//DETERMINE IF THE LETTER GUESSED BELONGS IN THE ANSWER OR WRONG DISPLAYS
-		// for(var letterGuessed = 0; currentWord.length < letterGuessed; letterGuessed++){
-		// 	console.log(guessedLetter);
-		// 	if(currentWord[letterGuessed] === guessedLetter){
-		// 		$("#answerDisplay").append(letterGuessed);
-		// 		remainingLetters--; 
-		// 	}
-		// 	$("wrong-geusses-display").append(letterGuessed);
-		// }
 	//SET THE LOGIC TO DISPLAY THE OTHER APP INFORMATION
 	});
 
-		
+	function endGame(){
+		if(randomWord === answer.join("")){
+			numberOfWins++;
+			$("#winCounter").html(numberOfWins);
+			$(".available-letter-button").prop("disabled", true);
+			$("#nicCage").attr("src", "./images/nicCage_isAlive.png");
+			$("#gameInstructions").html("To Play Again Choose A Difficulty!");
+			difficultyChosen = false;
+			resetApp(numberOfWins, numberOfLosses);
+			
 
-	// function selections(letter){
-	// 	var letterGuessed = letter.toLowerCase();
-	// 	var letterInWord = false;
-	// 	var letterAlreadyGuessed = false;
-	// 	for(var j = 0; j < currentWord.length; j++){
-	// 		if(currentWord[j] === letterGuessed){
-	// 			remainingLetters--;
-	// 			answer[j] = letterGuessed;
-	// 			answerDisplay[j] = " "+letterGuessed+" ";
-	// 			$("#answerDisplay").html(answerDisplay);
-	// 			letterInWord = true;
-	// 		}
-	// 	}
-	// }
-	// for(var index = 0; index < remainingLetters; index++){
-	// 	if (currentWord[index] === ) {
+		}else if(guesses === 0){
+			numberOfLosses++;
+			$("#lossCounter").html(numberOfLosses);
+			$(".available-letter-button").prop("disabled", true);
+			$("#nicCage").attr("src", "./images/nicCage_isDead.png");
+			$("#gameInstructions").html("To Play Again Choose A Difficulty!");
+			difficultyChosen = false;
+			resetApp(numberOfWins, numberOfLosses);
 
-	// 	}	
-
-	//CREATE THE LOGIC TO DISPLAY THE CORRECT LETTERS IN THE CORRECT ORDER OF THE ARRAY OF THE RANDOMLY CHOSON WORD
-
-	// CREATE THE LOGIC FOR THE END GAME WIN/LOSS SCENARIOS
-
-
+		}
+	}
 	
 });
 
