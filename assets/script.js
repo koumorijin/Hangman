@@ -165,12 +165,14 @@ $(document).ready(function() {
 
 		}else if(guesses === 0){
 			numberOfLosses++;
+			alert("The correct answer was " + randomWord + ".\n Please choose a difficulty to try again.");
 			$("#lossCounter").html(numberOfLosses);
 			$(".available-letter-button").prop("disabled", true);
 			$("#nicCage").attr("src", "./images/nicCage_isDead.png");
 			$("#gameInstructions").html("To Play Again Choose A Difficulty!");
 			difficultyChosen = false;
 			resetApp(numberOfWins, numberOfLosses);
+
 
 		}
 	}
